@@ -1,3 +1,5 @@
+import type { Prisma } from "@prisma/client";
+
 export interface RoundRobinPairing {
   homeTeamId: string;
   awayTeamId: string;
@@ -66,4 +68,33 @@ export function generateRoundRobin(
   }));
 
   return [...legOneRounds, ...legTwoRounds];
+}
+
+/**
+ * Persists a schedule built by generateRoundRobin. Must run inside a $transaction.
+ */
+export async function persistRoundRobin(
+  tx: Prisma.TransactionClient,
+  tournamentId: string,
+  rounds: RoundRobinRound[],
+) {
+  const roundRecords = [];
+  for (const round of rounds) {
+    const roundRecord = await tx.round.create({
+      data: { tournamentId, name: round.name, order: round.order },
+    });
+    for (const pairing of round.pairings) {
+      await tx.match.create({
+        data: {
+          tournamentId,
+          roundId: roundRecord.id,
+          homeTeamId: pairing.homeTeamId,
+          awayTeamId: pairing.awayTeamId,
+          status: "SCHEDULED",
+        },
+      });
+    }
+    roundRecords.push(roundRecord);
+  }
+  return roundRecords;
 }

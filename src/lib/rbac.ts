@@ -48,6 +48,19 @@ export async function isTournamentOrganizer(
   return !!tournament;
 }
 
+export async function requireTournamentEditAccess(
+  user: SessionPayload | null,
+  tournamentId: string,
+): Promise<SessionPayload> {
+  const u = requireRole(user, ["ADMIN", "ORGANIZER"]);
+  if (u.role === "ADMIN") return u;
+  const owner = await isTournamentOrganizer(u.sub, tournamentId);
+  if (!owner) {
+    throw new AuthError("You do not have permission to manage this tournament", 403);
+  }
+  return u;
+}
+
 export async function isRefereeForMatch(
   userId: string,
   matchId: string,
