@@ -48,6 +48,19 @@ export async function isTournamentOrganizer(
   return !!tournament;
 }
 
+export async function requireTeamEditAccess(
+  user: SessionPayload | null,
+  teamId: string,
+): Promise<SessionPayload> {
+  const u = requireRole(user, ["ADMIN", "ORGANIZER", "TEAM_MANAGER"]);
+  if (u.role === "ADMIN" || u.role === "ORGANIZER") return u;
+  const manager = await isTeamManagerOf(u.sub, teamId);
+  if (!manager) {
+    throw new AuthError("You do not have permission to manage this team", 403);
+  }
+  return u;
+}
+
 export async function requireTournamentEditAccess(
   user: SessionPayload | null,
   tournamentId: string,
