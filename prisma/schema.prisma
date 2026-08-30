@@ -1,0 +1,164 @@
+// STMS database schema — see .claude/skills/database-design/SKILL.md for conventions
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  ORGANIZER
+  REFEREE
+  TEAM_MANAGER
+}
+
+enum TournamentFormat {
+  LEAGUE
+  KNOCKOUT
+}
+
+enum TournamentStatus {
+  DRAFT
+  ONGOING
+  COMPLETED
+}
+
+enum MatchStatus {
+  SCHEDULED
+  LIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum NextMatchSlot {
+  HOME
+  AWAY
+}
+
+model User {
+  id                   String              @id @default(cuid())
+  name                 String
+  email                String              @unique
+  passwordHash         String
+  role                 Role                @default(TEAM_MANAGER)
+  createdAt            DateTime            @default(now())
+  managedTeams         Team[]              @relation("TeamManagers")
+  refereeAssignments   RefereeAssignment[]
+  organizedTournaments Tournament[]        @relation("Organizer")
+}
+
+model Tournament {
+  id          String           @id @default(cuid())
+  name        String
+  format      TournamentFormat
+  status      TournamentStatus @default(DRAFT)
+  startDate   DateTime?
+  endDate     DateTime?
+  pointsWin   Int              @default(3)
+  pointsDraw  Int              @default(1)
+  pointsLoss  Int              @default(0)
+  organizerId String
+  organizer   User             @relation("Organizer", fields: [organizerId], references: [id])
+  teams       TournamentTeam[]
+  rounds      Round[]
+  matches     Match[]
+  createdAt   DateTime         @default(now())
+}
+
+model Team {
+  id          String           @id @default(cuid())
+  name        String
+  shortName   String?
+  logoUrl     String?
+  managers    User[]           @relation("TeamManagers")
+  players     Player[]
+  tournaments TournamentTeam[]
+  homeMatches Match[]          @relation("HomeTeam")
+  awayMatches Match[]          @relation("AwayTeam")
+  createdAt   DateTime         @default(now())
+}
+
+model TournamentTeam {
+  id           String     @id @default(cuid())
+  tournamentId String
+  teamId       String
+  seed         Int?
+  tournament   Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  team         Team       @relation(fields: [teamId], references: [id])
+
+  @@unique([tournamentId, teamId])
+}
+
+model Player {
+  id        String   @id @default(cuid())
+  name      String
+  jerseyNo  Int?
+  position  String?
+  teamId    String
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  goals     Goal[]
+  createdAt DateTime @default(now())
+}
+
+model Round {
+  id           String     @id @default(cuid())
+  tournamentId String
+  name         String
+  order        Int
+  tournament   Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  matches      Match[]
+
+  @@unique([tournamentId, order])
+}
+
+model Match {
+  id                String             @id @default(cuid())
+  tournamentId      String
+  roundId           String
+  homeTeamId        String?
+  awayTeamId        String?
+  homeScore         Int?
+  awayScore         Int?
+  homePenaltyScore  Int?
+  awayPenaltyScore  Int?
+  status            MatchStatus        @default(SCHEDULED)
+  scheduledAt       DateTime?
+  venue             String?
+  nextMatchId       String?
+  nextMatchSlot     NextMatchSlot?
+  bracketPosition   Int?
+  tournament        Tournament         @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  round             Round              @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  homeTeam          Team?              @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  awayTeam          Team?              @relation("AwayTeam", fields: [awayTeamId], references: [id])
+  nextMatch         Match?             @relation("Advancement", fields: [nextMatchId], references: [id])
+  feederMatches     Match[]            @relation("Advancement")
+  goals             Goal[]
+  refereeAssignment RefereeAssignment?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+}
+
+model Goal {
+  id       String  @id @default(cuid())
+  matchId  String
+  playerId String
+  teamId   String
+  minute   Int?
+  ownGoal  Boolean @default(false)
+  match    Match   @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  player   Player  @relation(fields: [playerId], references: [id])
+}
+
+model RefereeAssignment {
+  id         String   @id @default(cuid())
+  matchId    String   @unique
+  refereeId  String
+  match      Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  referee    User     @relation(fields: [refereeId], references: [id])
+  assignedAt DateTime @default(now())
+}
