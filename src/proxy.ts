@@ -22,7 +22,7 @@ async function verifyToken(token: string) {
   }
 }
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   const needsAdmin = ADMIN_ONLY_PREFIXES.some((p) => pathname.startsWith(p));
