@@ -133,17 +133,6 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) — the marketing home page is public; sign in or register to reach the dashboard.
 
-### Demo accounts
-
-Seeded by `npm run db:seed` (password for all: `password123`):
-
-| Role | Email |
-|---|---|
-| Admin | `admin@stms.dev` |
-| Organizer | `organizer@stms.dev` |
-| Referee | `referee1@stms.dev` |
-| Team Manager | `manager1@stms.dev` |
-
 ## Scripts
 
 | Command | Description |
