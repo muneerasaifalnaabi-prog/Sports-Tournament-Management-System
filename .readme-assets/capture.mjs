@@ -27,6 +27,8 @@ async function main() {
 
   // Home (marketing landing page)
   await page.goto(BASE + "/", { waitUntil: "networkidle" });
+  await page.waitForTimeout(300);
+  await page.screenshot({ path: path.join(OUT, "hero.png") });
   await revealPage(page);
   await page.screenshot({ path: path.join(OUT, "home.png"), fullPage: true });
 
