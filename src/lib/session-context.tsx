@@ -55,9 +55,6 @@ export function useSession(): SessionContextValue {
   return ctx;
 }
 
-export function hasRole(
-  user: SessionUser | null,
-  roles: SessionUser["role"][],
-): boolean {
+export function hasRole(user: SessionUser | null, roles: SessionUser["role"][]): boolean {
   return !!user && roles.includes(user.role);
 }

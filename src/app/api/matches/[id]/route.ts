@@ -16,7 +16,9 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
         homeTeam: true,
         awayTeam: true,
         goals: { include: { player: { select: { id: true, name: true } } } },
-        refereeAssignment: { include: { referee: { select: { id: true, name: true, email: true } } } },
+        refereeAssignment: {
+          include: { referee: { select: { id: true, name: true, email: true } } },
+        },
       },
     });
     if (!match) throw new NotFoundError("Match not found");

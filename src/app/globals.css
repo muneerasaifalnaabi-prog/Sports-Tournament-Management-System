@@ -1,41 +1,50 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f4f6fb;
-  --surface: #ffffff;
-  --foreground: #0f172a;
-  --muted: #64748b;
-  --border: #e2e8f0;
+  --background: #0a0e1c;
+  --surface: #131a2e;
+  --surface-alt: #1c2440;
+  --foreground: #f5f6fb;
+  --muted: #8b96b8;
+  --border: #262f4d;
 
-  --brand: #4f46e5;
-  --brand-dark: #4338ca;
-  --brand-light: #eef2ff;
+  --brand: #e8a33d;
+  --brand-dark: #c9862a;
+  --brand-light: rgb(232 163 61 / 0.14);
 
-  --status-scheduled: #64748b;
-  --status-scheduled-bg: #f1f5f9;
-  --status-live: #dc2626;
-  --status-live-bg: #fee2e2;
-  --status-completed: #16a34a;
-  --status-completed-bg: #dcfce7;
-  --status-cancelled: #6b7280;
-  --status-cancelled-bg: #f3f4f6;
+  --status-scheduled: #9aa6c7;
+  --status-scheduled-bg: rgb(154 166 199 / 0.14);
+  --status-live: #f0454f;
+  --status-live-bg: rgb(240 69 79 / 0.16);
+  --status-completed: #2fd07c;
+  --status-completed-bg: rgb(47 208 124 / 0.15);
+  --status-cancelled: #7b869e;
+  --status-cancelled-bg: rgb(123 134 158 / 0.14);
+
+  /* Single typeface (Rubik) app-wide — heading is an alias, not a second family */
+  --font-heading: var(--font-sans);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-brand: var(--brand);
   --color-brand-dark: var(--brand-dark);
   --color-brand-light: var(--brand-light);
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-heading);
+  --font-brand: var(--font-brand);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family:
+    var(--font-sans),
     system-ui,
     -apple-system,
     "Segoe UI",
@@ -43,6 +52,21 @@ body {
     Helvetica,
     Arial,
     sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading), var(--font-sans), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* "STMS" wordmark — logo lockups only, see src/lib/fonts.ts */
+.font-brand {
+  font-family: var(--font-brand), var(--font-heading), var(--font-sans), sans-serif;
+  letter-spacing: 0.01em;
 }
 
 @layer components {
@@ -50,7 +74,21 @@ body {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 0.75rem;
-    box-shadow: 0 1px 2px 0 rgb(15 23 42 / 0.04);
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.2);
+    transition:
+      box-shadow 0.2s ease,
+      transform 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  /* Clickable cards (tournament/match/team tiles) — a deliberate lift on hover */
+  a.card:hover,
+  .card-interactive:hover {
+    box-shadow:
+      0 16px 32px -14px rgb(0 0 0 / 0.5),
+      0 0 0 1px rgb(232 163 61 / 0.25);
+    transform: translateY(-2px);
+    border-color: rgb(232 163 61 / 0.4);
   }
 
   .btn {
@@ -59,45 +97,60 @@ body {
     justify-content: center;
     gap: 0.375rem;
     border-radius: 0.5rem;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.875rem;
     padding: 0.5rem 1rem;
-    transition: background-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease,
+      opacity 0.15s ease,
+      transform 0.1s ease,
+      box-shadow 0.15s ease;
     white-space: nowrap;
   }
   .btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
+  .btn:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+  .btn:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
   .btn-primary {
     background: var(--brand);
-    color: white;
+    color: #14100a;
+    box-shadow: 0 1px 2px 0 rgb(232 163 61 / 0.3);
   }
   .btn-primary:hover:not(:disabled) {
-    background: var(--brand-dark);
+    background: #f2b458;
+    box-shadow: 0 4px 16px -2px rgb(232 163 61 / 0.5);
   }
   .btn-secondary {
-    background: white;
+    background: var(--surface-alt);
     color: var(--foreground);
     border: 1px solid var(--border);
   }
   .btn-secondary:hover:not(:disabled) {
-    background: #f8fafc;
+    background: #242c4e;
+    border-color: #384167;
   }
   .btn-danger {
-    background: #fef2f2;
-    color: #dc2626;
-    border: 1px solid #fecaca;
+    background: rgb(240 69 79 / 0.12);
+    color: #ff7b83;
+    border: 1px solid rgb(240 69 79 / 0.35);
   }
   .btn-danger:hover:not(:disabled) {
-    background: #fee2e2;
+    background: rgb(240 69 79 / 0.2);
   }
   .btn-ghost {
     background: transparent;
     color: var(--muted);
   }
   .btn-ghost:hover:not(:disabled) {
-    background: #f1f5f9;
+    background: var(--surface-alt);
     color: var(--foreground);
   }
 
@@ -107,8 +160,11 @@ body {
     border-radius: 0.5rem;
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
-    background: white;
+    background: var(--surface-alt);
     color: var(--foreground);
+  }
+  .input::placeholder {
+    color: #5b6690;
   }
   .input:focus {
     outline: 2px solid var(--brand);
@@ -122,6 +178,26 @@ body {
     font-weight: 500;
     color: var(--muted);
     margin-bottom: 0.25rem;
+  }
+
+  /* Small-caps tracked eyebrow label — the editorial "section tag" motif */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-heading), var(--font-sans), system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
+
+  /* Thin gold rule — the recurring divider motif */
+  .rule-gold {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--brand) 0%, rgb(232 163 61 / 0) 60%);
   }
 
   .badge {
@@ -152,12 +228,17 @@ body {
   }
 
   .badge-role {
-    color: var(--brand-dark);
+    color: var(--brand);
     background: var(--brand-light);
   }
 
   .skeleton {
-    background: linear-gradient(90deg, #eef1f6 25%, #e4e8f0 37%, #eef1f6 63%);
+    background: linear-gradient(
+      90deg,
+      var(--surface) 25%,
+      var(--surface-alt) 37%,
+      var(--surface) 63%
+    );
     background-size: 400% 100%;
     animation: skeleton-loading 1.4s ease infinite;
     border-radius: 0.375rem;
@@ -190,4 +271,222 @@ body {
       opacity: 0.35;
     }
   }
+
+  /* Marketing hero — stadium floodlight motif */
+  .hero-stadium {
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(120% 100% at 50% 0%, #1c2447 0%, #0d1226 55%, #05070f 100%);
+  }
+
+  /* Hero background photo — slow Ken Burns drift, never distracting */
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    animation: hero-ken-burns 22s ease-in-out infinite alternate;
+  }
+
+  .hero-photo img {
+    object-fit: cover;
+  }
+
+  @keyframes hero-ken-burns {
+    0% {
+      transform: scale(1) translate3d(0, 0, 0);
+    }
+    100% {
+      transform: scale(1.08) translate3d(-1%, -1%, 0);
+    }
+  }
+
+  .hero-photo-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(90deg, #05070f 0%, rgb(5 7 15 / 0.88) 32%, rgb(5 7 15 / 0.45) 62%, rgb(5 7 15 / 0.2) 100%),
+      linear-gradient(0deg, #05070f 0%, transparent 30%);
+  }
+
+  /* CTA background photo — centered vignette so text stays legible over the full frame */
+  .cta-photo-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(
+      60% 90% at 50% 35%,
+      rgb(5 7 15 / 0.55) 0%,
+      rgb(5 7 15 / 0.88) 65%,
+      #05070f 100%
+    );
+  }
+
+  /* Feature-showcase photos — gentle float + zoom-on-hover, never distracting */
+  .showcase-media {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 24px 60px -24px rgb(0 0 0 / 0.65);
+    animation: showcase-float 7s ease-in-out infinite;
+  }
+
+  @keyframes showcase-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  .showcase-media img {
+    transition: transform 0.6s ease;
+  }
+
+  .showcase-media:hover img {
+    transform: scale(1.045);
+  }
+
+  .hero-floodlight {
+    position: absolute;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgb(232 163 61 / 0.4) 0%, rgb(232 163 61 / 0) 70%);
+    animation: floodlight-pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes floodlight-pulse {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.08);
+    }
+  }
+
+  .hero-ray {
+    position: absolute;
+    inset: -20% -10% auto -10%;
+    height: 160%;
+    background: conic-gradient(
+      from 200deg at 50% 0%,
+      transparent 0deg,
+      rgb(232 163 61 / 0.08) 6deg,
+      transparent 12deg,
+      transparent 40deg,
+      rgb(255 255 255 / 0.05) 46deg,
+      transparent 52deg
+    );
+    animation: ray-sweep 10s linear infinite;
+  }
+
+  @keyframes ray-sweep {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .hero-orbit {
+    animation: orbit-float 6s ease-in-out infinite;
+  }
+
+  @keyframes orbit-float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-14px) rotate(8deg);
+    }
+  }
+
+  .hero-orbit-delayed {
+    animation-delay: -3s;
+  }
+
+  .scoreboard-digit {
+    font-variant-numeric: tabular-nums;
+    animation: digit-flicker 5s ease-in-out infinite;
+  }
+
+  @keyframes digit-flicker {
+    0%,
+    92%,
+    100% {
+      opacity: 1;
+    }
+    94% {
+      opacity: 0.4;
+    }
+    96% {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-floodlight,
+    .hero-ray,
+    .hero-orbit,
+    .hero-photo,
+    .showcase-media,
+    .scoreboard-digit,
+    .live-dot,
+    .skeleton,
+    .animate-in {
+      animation: none !important;
+    }
+  }
+
+  /* Subtle content entrance — used once per page/section mount */
+  .animate-in {
+    animation: fade-in-up 0.4s ease both;
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+::selection {
+  background: var(--brand);
+  color: #14100a;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+/* Slim, dark-friendly scrollbars */
+* {
+  scrollbar-color: var(--border) transparent;
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
 }

@@ -68,7 +68,11 @@ export default function AdminUsersPage() {
                   <Td>
                     <div className="flex items-center gap-2">
                       <RoleBadge role={u.role} />
-                      <Select value={u.role} onChange={(e) => handleRoleChange(u.id, e.target.value)} className="w-40">
+                      <Select
+                        value={u.role}
+                        onChange={(e) => handleRoleChange(u.id, e.target.value)}
+                        className="w-40"
+                      >
                         {roles.map((r) => (
                           <option key={r} value={r}>
                             {r}

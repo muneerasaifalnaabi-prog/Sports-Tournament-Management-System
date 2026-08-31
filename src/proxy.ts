@@ -4,11 +4,7 @@ import { jwtVerify } from "jose";
 const SESSION_COOKIE = "stms_session";
 
 const ADMIN_ONLY_PREFIXES = ["/admin"];
-const AUTHENTICATED_PREFIXES = [
-  "/dashboard",
-  "/tournaments/new",
-  "/teams/new",
-];
+const AUTHENTICATED_PREFIXES = ["/dashboard", "/tournaments/new", "/teams/new"];
 // Matches "/tournaments/:id/edit" and "/teams/:id/edit"
 const EDIT_SUFFIX_PATTERN = /^\/(tournaments|teams)\/[^/]+\/edit$/;
 

@@ -69,7 +69,12 @@ export default function EditTeamPage({ params }: { params: Promise<{ id: string 
             </div>
             <div>
               <Label htmlFor="shortName">Short name</Label>
-              <Input id="shortName" maxLength={10} value={shortName} onChange={(e) => setShortName(e.target.value)} />
+              <Input
+                id="shortName"
+                maxLength={10}
+                value={shortName}
+                onChange={(e) => setShortName(e.target.value)}
+              />
             </div>
             <FieldError message={error ?? undefined} />
             <div className="flex items-center justify-between pt-2">

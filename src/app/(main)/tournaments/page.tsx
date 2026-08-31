@@ -30,11 +30,16 @@ export default function TournamentsPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-foreground">Tournaments</h1>
+          <span className="eyebrow">Competitions</span>
+          <h1 className="mt-2 text-2xl font-bold text-foreground">Tournaments</h1>
           <p className="text-sm text-muted">Browse and manage all tournaments.</p>
         </div>
         <div className="flex items-center gap-2">
-          <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="w-40">
+          <Select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="w-40"
+          >
             <option value="">All statuses</option>
             <option value="DRAFT">Draft</option>
             <option value="ONGOING">Ongoing</option>
@@ -60,8 +65,14 @@ export default function TournamentsPage() {
           <EmptyState
             icon={Trophy}
             title="No tournaments yet"
-            description={canCreate ? "Create your first tournament to get started." : "Check back once an organizer creates a tournament."}
-            action={canCreate ? <Button href="/tournaments/new">Create tournament</Button> : undefined}
+            description={
+              canCreate
+                ? "Create your first tournament to get started."
+                : "Check back once an organizer creates a tournament."
+            }
+            action={
+              canCreate ? <Button href="/tournaments/new">Create tournament</Button> : undefined
+            }
           />
         </div>
       ) : (

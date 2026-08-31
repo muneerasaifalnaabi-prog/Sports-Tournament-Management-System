@@ -18,10 +18,7 @@ export interface TopScorerRow {
   goals: number;
 }
 
-export function calculateTopScorers(
-  goals: GoalInput[],
-  players: PlayerInput[],
-): TopScorerRow[] {
+export function calculateTopScorers(goals: GoalInput[], players: PlayerInput[]): TopScorerRow[] {
   const playerById = new Map(players.map((p) => [p.id, p]));
   const tally = new Map<string, number>();
 

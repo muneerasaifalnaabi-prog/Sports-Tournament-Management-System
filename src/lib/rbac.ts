@@ -15,10 +15,7 @@ export function requireUser(user: SessionPayload | null): SessionPayload {
   return user;
 }
 
-export function requireRole(
-  user: SessionPayload | null,
-  allowed: Role[],
-): SessionPayload {
+export function requireRole(user: SessionPayload | null, allowed: Role[]): SessionPayload {
   const u = requireUser(user);
   if (!allowed.includes(u.role)) {
     throw new AuthError("You do not have permission to perform this action", 403);
@@ -26,10 +23,7 @@ export function requireRole(
   return u;
 }
 
-export async function isTeamManagerOf(
-  userId: string,
-  teamId: string,
-): Promise<boolean> {
+export async function isTeamManagerOf(userId: string, teamId: string): Promise<boolean> {
   const team = await prisma.team.findFirst({
     where: { id: teamId, managers: { some: { id: userId } } },
     select: { id: true },
@@ -74,10 +68,7 @@ export async function requireTournamentEditAccess(
   return u;
 }
 
-export async function isRefereeForMatch(
-  userId: string,
-  matchId: string,
-): Promise<boolean> {
+export async function isRefereeForMatch(userId: string, matchId: string): Promise<boolean> {
   const assignment = await prisma.refereeAssignment.findFirst({
     where: { matchId, refereeId: userId },
     select: { id: true },

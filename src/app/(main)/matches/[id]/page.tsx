@@ -23,7 +23,12 @@ interface MatchDetail {
   round: { name: string };
   homeTeam: { id: string; name: string; players?: never } | null;
   awayTeam: { id: string; name: string } | null;
-  goals: { id: string; minute: number | null; ownGoal: boolean; player: { id: string; name: string } }[];
+  goals: {
+    id: string;
+    minute: number | null;
+    ownGoal: boolean;
+    player: { id: string; name: string };
+  }[];
   refereeAssignment: { referee: { id: string; name: string; email: string } } | null;
 }
 
@@ -70,7 +75,8 @@ export default function MatchDetailPage({ params }: { params: Promise<{ id: stri
 
   const isOrganizer = hasRole(user, ["ADMIN", "ORGANIZER"]);
   const isAssignedReferee = !!user && match.refereeAssignment?.referee.id === user.id;
-  const canRecordResult = (isOrganizer || isAssignedReferee) && !!match.homeTeam && !!match.awayTeam;
+  const canRecordResult =
+    (isOrganizer || isAssignedReferee) && !!match.homeTeam && !!match.awayTeam;
 
   const handleSubmitResult = async (values: MatchResultFormValues) => {
     const res = await fetch(`/api/matches/${id}/result`, {
@@ -106,13 +112,17 @@ export default function MatchDetailPage({ params }: { params: Promise<{ id: stri
           </div>
           <div className="flex items-center justify-between gap-4 text-center">
             <div className="flex-1">
-              <p className="text-lg font-semibold text-foreground">{match.homeTeam?.name ?? "TBD"}</p>
+              <p className="text-lg font-semibold text-foreground">
+                {match.homeTeam?.name ?? "TBD"}
+              </p>
             </div>
-            <div className="rounded-lg bg-slate-100 px-4 py-2 text-2xl font-bold text-foreground">
+            <div className="rounded-lg bg-surface-alt px-5 py-2 text-4xl font-bold tracking-tight text-foreground">
               {match.homeScore ?? "–"} : {match.awayScore ?? "–"}
             </div>
             <div className="flex-1">
-              <p className="text-lg font-semibold text-foreground">{match.awayTeam?.name ?? "TBD"}</p>
+              <p className="text-lg font-semibold text-foreground">
+                {match.awayTeam?.name ?? "TBD"}
+              </p>
             </div>
           </div>
           {match.homePenaltyScore != null && match.awayPenaltyScore != null && (
@@ -169,11 +179,16 @@ export default function MatchDetailPage({ params }: { params: Promise<{ id: stri
           <CardBody>
             {match.refereeAssignment ? (
               <p className="text-sm text-foreground">
-                Assigned to <span className="font-medium">{match.refereeAssignment.referee.name}</span>
+                Assigned to{" "}
+                <span className="font-medium">{match.refereeAssignment.referee.name}</span>
               </p>
             ) : (
               <div className="flex flex-col gap-2 sm:flex-row">
-                <Select value={selectedReferee} onChange={(e) => setSelectedReferee(e.target.value)} className="sm:max-w-xs">
+                <Select
+                  value={selectedReferee}
+                  onChange={(e) => setSelectedReferee(e.target.value)}
+                  className="sm:max-w-xs"
+                >
                   <option value="">Select a referee…</option>
                   {referees.map((r) => (
                     <option key={r.id} value={r.id}>
@@ -209,7 +224,11 @@ export default function MatchDetailPage({ params }: { params: Promise<{ id: stri
               awayScore: match.awayScore ?? 0,
               homePenaltyScore: match.homePenaltyScore,
               awayPenaltyScore: match.awayPenaltyScore,
-              goals: match.goals.map((g) => ({ playerId: g.player.id, minute: g.minute, ownGoal: g.ownGoal })),
+              goals: match.goals.map((g) => ({
+                playerId: g.player.id,
+                minute: g.minute,
+                ownGoal: g.ownGoal,
+              })),
             }}
             onSubmit={handleSubmitResult}
           />

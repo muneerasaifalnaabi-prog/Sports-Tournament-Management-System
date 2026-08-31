@@ -5,7 +5,13 @@ import type { StandingRow } from "@/lib/standings/calculate";
 
 export function LeagueTable({ standings }: { standings: StandingRow[] }) {
   if (standings.length === 0) {
-    return <EmptyState icon={ListOrdered} title="No standings yet" description="Standings appear once fixtures are generated." />;
+    return (
+      <EmptyState
+        icon={ListOrdered}
+        title="No standings yet"
+        description="Standings appear once fixtures are generated."
+      />
+    );
   }
 
   return (
@@ -29,8 +35,8 @@ export function LeagueTable({ standings }: { standings: StandingRow[] }) {
           <Tr key={row.teamId}>
             <Td>
               <span
-                className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold ${
-                  idx < 3 ? "bg-brand-light text-brand" : "bg-slate-100 text-muted"
+                className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
+                  idx < 3 ? "bg-brand-light text-brand" : "bg-surface-alt text-muted"
                 }`}
               >
                 {idx + 1}
@@ -43,8 +49,10 @@ export function LeagueTable({ standings }: { standings: StandingRow[] }) {
             <Td className="text-center">{row.losses}</Td>
             <Td className="text-center">{row.goalsFor}</Td>
             <Td className="text-center">{row.goalsAgainst}</Td>
-            <Td className="text-center">{row.goalDifference > 0 ? `+${row.goalDifference}` : row.goalDifference}</Td>
-            <Td className="text-center font-semibold">{row.points}</Td>
+            <Td className="text-center">
+              {row.goalDifference > 0 ? `+${row.goalDifference}` : row.goalDifference}
+            </Td>
+            <Td className="text-center text-base font-bold text-brand">{row.points}</Td>
           </Tr>
         ))}
       </tbody>

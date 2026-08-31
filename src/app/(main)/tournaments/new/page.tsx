@@ -51,7 +51,11 @@ export default function NewTournamentPage() {
             </div>
             <div>
               <Label htmlFor="format">Format</Label>
-              <Select id="format" value={format} onChange={(e) => setFormat(e.target.value as "LEAGUE" | "KNOCKOUT")}>
+              <Select
+                id="format"
+                value={format}
+                onChange={(e) => setFormat(e.target.value as "LEAGUE" | "KNOCKOUT")}
+              >
                 <option value="LEAGUE">League (round-robin table)</option>
                 <option value="KNOCKOUT">Knockout (single elimination)</option>
               </Select>

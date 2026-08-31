@@ -22,7 +22,7 @@ export interface MatchCardData {
 }
 
 function TeamLabel({ team }: { team: MatchCardTeam | null }) {
-  return <span className="truncate">{team ? (team.shortName || team.name) : "TBD"}</span>;
+  return <span className="truncate">{team ? team.shortName || team.name : "TBD"}</span>;
 }
 
 export function MatchCard({ match }: { match: MatchCardData }) {
@@ -38,13 +38,16 @@ export function MatchCard({ match }: { match: MatchCardData }) {
         {match.scheduledAt && (
           <span className="flex items-center gap-1 text-xs text-muted">
             <CalendarDays size={13} />
-            {new Date(match.scheduledAt).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+            {new Date(match.scheduledAt).toLocaleDateString(undefined, {
+              month: "short",
+              day: "numeric",
+            })}
           </span>
         )}
       </div>
       <div className="flex items-center justify-between gap-2 text-sm font-medium text-foreground">
         <TeamLabel team={match.homeTeam} />
-        <span className="shrink-0 rounded bg-slate-100 px-2 py-0.5 text-xs font-semibold text-foreground">
+        <span className="shrink-0 rounded bg-surface-alt px-2 py-0.5 text-sm font-bold tracking-tight text-foreground">
           {hasScore ? `${match.homeScore} - ${match.awayScore}` : "vs"}
         </span>
         <TeamLabel team={match.awayTeam} />

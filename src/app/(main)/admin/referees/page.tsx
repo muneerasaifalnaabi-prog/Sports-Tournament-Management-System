@@ -54,14 +54,20 @@ export default function RefereeBoardPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-xl font-semibold text-foreground">Referee board</h1>
-        <p className="text-sm text-muted">Assign referees to upcoming matches across all tournaments.</p>
+        <p className="text-sm text-muted">
+          Assign referees to upcoming matches across all tournaments.
+        </p>
       </div>
 
       <Card>
         {matches === null ? (
           <TableSkeleton rows={6} cols={4} />
         ) : matches.length === 0 ? (
-          <EmptyState icon={Flag} title="No scheduled matches" description="Matches appear here once fixtures are generated." />
+          <EmptyState
+            icon={Flag}
+            title="No scheduled matches"
+            description="Matches appear here once fixtures are generated."
+          />
         ) : (
           <Table>
             <Thead>
@@ -76,7 +82,10 @@ export default function RefereeBoardPage() {
               {matches.map((m) => (
                 <Tr key={m.id}>
                   <Td>
-                    <Link href={`/matches/${m.id}`} className="font-medium text-foreground hover:text-brand">
+                    <Link
+                      href={`/matches/${m.id}`}
+                      className="font-medium text-foreground hover:text-brand"
+                    >
                       {m.homeTeam?.name ?? "TBD"} vs {m.awayTeam?.name ?? "TBD"}
                     </Link>
                     <p className="text-xs text-muted">{m.round.name}</p>

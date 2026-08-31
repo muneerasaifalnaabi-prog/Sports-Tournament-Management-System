@@ -41,11 +41,17 @@ export default function TeamsPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-foreground">Teams</h1>
+          <span className="eyebrow">Squads</span>
+          <h1 className="mt-2 text-2xl font-bold text-foreground">Teams</h1>
           <p className="text-sm text-muted">Browse registered teams and rosters.</p>
         </div>
         <div className="flex items-center gap-2">
-          <Input placeholder="Search teams…" value={q} onChange={(e) => setQ(e.target.value)} className="w-48" />
+          <Input
+            placeholder="Search teams…"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            className="w-48"
+          />
           {canCreate && (
             <Button href="/teams/new">
               <Plus size={16} />
@@ -63,12 +69,20 @@ export default function TeamsPage() {
         </div>
       ) : teams.length === 0 ? (
         <div className="card">
-          <EmptyState icon={Shield} title="No teams found" description={canCreate ? "Create a team to get started." : undefined} />
+          <EmptyState
+            icon={Shield}
+            title="No teams found"
+            description={canCreate ? "Create a team to get started." : undefined}
+          />
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {teams.map((team) => (
-            <Link key={team.id} href={`/teams/${team.id}`} className="card flex items-center gap-3 p-4 transition-shadow hover:shadow-md">
+            <Link
+              key={team.id}
+              href={`/teams/${team.id}`}
+              className="card flex items-center gap-3 p-4 transition-shadow hover:shadow-md"
+            >
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-light text-brand">
                 <Shield size={18} />
               </div>

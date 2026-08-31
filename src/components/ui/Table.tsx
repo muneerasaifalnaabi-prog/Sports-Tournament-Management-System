@@ -9,7 +9,7 @@ export function Table({ className = "", ...props }: HTMLAttributes<HTMLTableElem
 }
 
 export function Thead(props: HTMLAttributes<HTMLTableSectionElement>) {
-  return <thead className="sticky top-0 bg-white" {...props} />;
+  return <thead className="sticky top-0 bg-surface" {...props} />;
 }
 
 export function Th({ className = "", ...props }: ThHTMLAttributes<HTMLTableCellElement>) {
@@ -22,9 +22,19 @@ export function Th({ className = "", ...props }: ThHTMLAttributes<HTMLTableCellE
 }
 
 export function Tr({ className = "", ...props }: HTMLAttributes<HTMLTableRowElement>) {
-  return <tr className={`odd:bg-white even:bg-slate-50/60 hover:bg-brand-light/40 ${className}`.trim()} {...props} />;
+  return (
+    <tr
+      className={`odd:bg-surface even:bg-surface-alt/50 hover:bg-brand-light/40 ${className}`.trim()}
+      {...props}
+    />
+  );
 }
 
 export function Td({ className = "", ...props }: TdHTMLAttributes<HTMLTableCellElement>) {
-  return <td className={`border-b border-border px-4 py-2.5 text-foreground ${className}`.trim()} {...props} />;
+  return (
+    <td
+      className={`border-b border-border px-4 py-2.5 text-foreground ${className}`.trim()}
+      {...props}
+    />
+  );
 }

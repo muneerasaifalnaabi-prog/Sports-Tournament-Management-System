@@ -90,7 +90,11 @@ export function MatchResultForm({
   };
 
   if (!canSubmit) {
-    return <p className="text-sm text-muted">Only the organizer or assigned referee can record this result.</p>;
+    return (
+      <p className="text-sm text-muted">
+        Only the organizer or assigned referee can record this result.
+      </p>
+    );
   }
 
   return (
@@ -119,14 +123,26 @@ export function MatchResultForm({
       </div>
 
       {needsPenalties && (
-        <div className="grid grid-cols-2 gap-4 rounded-lg bg-amber-50 p-3">
+        <div className="grid grid-cols-2 gap-4 rounded-lg border border-brand/30 bg-brand-light p-3">
           <div>
             <Label htmlFor="homePenalty">Penalties — {homeTeamName}</Label>
-            <Input id="homePenalty" type="number" min={0} value={homePenalty} onChange={(e) => setHomePenalty(e.target.value)} />
+            <Input
+              id="homePenalty"
+              type="number"
+              min={0}
+              value={homePenalty}
+              onChange={(e) => setHomePenalty(e.target.value)}
+            />
           </div>
           <div>
             <Label htmlFor="awayPenalty">Penalties — {awayTeamName}</Label>
-            <Input id="awayPenalty" type="number" min={0} value={awayPenalty} onChange={(e) => setAwayPenalty(e.target.value)} />
+            <Input
+              id="awayPenalty"
+              type="number"
+              min={0}
+              value={awayPenalty}
+              onChange={(e) => setAwayPenalty(e.target.value)}
+            />
           </div>
         </div>
       )}
@@ -134,7 +150,11 @@ export function MatchResultForm({
       <div>
         <div className="mb-2 flex items-center justify-between">
           <Label>Goal scorers</Label>
-          <button type="button" onClick={addGoal} className="flex items-center gap-1 text-xs font-medium text-brand hover:underline">
+          <button
+            type="button"
+            onClick={addGoal}
+            className="flex items-center gap-1 text-xs font-medium text-brand hover:underline"
+          >
             <Plus size={13} />
             Add goal
           </button>
@@ -159,7 +179,9 @@ export function MatchResultForm({
                 max={200}
                 placeholder="Min"
                 value={goal.minute ?? ""}
-                onChange={(e) => updateGoal(idx, { minute: e.target.value ? Number(e.target.value) : null })}
+                onChange={(e) =>
+                  updateGoal(idx, { minute: e.target.value ? Number(e.target.value) : null })
+                }
                 className="w-20"
               />
               <label className="flex items-center gap-1 text-xs text-muted">
@@ -170,7 +192,12 @@ export function MatchResultForm({
                 />
                 Own goal
               </label>
-              <button type="button" onClick={() => removeGoal(idx)} className="text-muted hover:text-red-600" aria-label="Remove goal">
+              <button
+                type="button"
+                onClick={() => removeGoal(idx)}
+                className="text-muted hover:text-red-400"
+                aria-label="Remove goal"
+              >
                 <Trash2 size={14} />
               </button>
             </div>

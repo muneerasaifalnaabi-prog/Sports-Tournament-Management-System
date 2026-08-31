@@ -86,15 +86,33 @@ export default function EditTournamentPage({ params }: { params: Promise<{ id: s
             <div className="grid grid-cols-3 gap-3">
               <div>
                 <Label htmlFor="pointsWin">Points: win</Label>
-                <Input id="pointsWin" type="number" min={0} value={pointsWin} onChange={(e) => setPointsWin(Number(e.target.value))} />
+                <Input
+                  id="pointsWin"
+                  type="number"
+                  min={0}
+                  value={pointsWin}
+                  onChange={(e) => setPointsWin(Number(e.target.value))}
+                />
               </div>
               <div>
                 <Label htmlFor="pointsDraw">Points: draw</Label>
-                <Input id="pointsDraw" type="number" min={0} value={pointsDraw} onChange={(e) => setPointsDraw(Number(e.target.value))} />
+                <Input
+                  id="pointsDraw"
+                  type="number"
+                  min={0}
+                  value={pointsDraw}
+                  onChange={(e) => setPointsDraw(Number(e.target.value))}
+                />
               </div>
               <div>
                 <Label htmlFor="pointsLoss">Points: loss</Label>
-                <Input id="pointsLoss" type="number" min={0} value={pointsLoss} onChange={(e) => setPointsLoss(Number(e.target.value))} />
+                <Input
+                  id="pointsLoss"
+                  type="number"
+                  min={0}
+                  value={pointsLoss}
+                  onChange={(e) => setPointsLoss(Number(e.target.value))}
+                />
               </div>
             </div>
             <FieldError message={error ?? undefined} />

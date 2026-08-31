@@ -5,7 +5,13 @@ import type { TopScorerRow } from "@/lib/standings/topScorers";
 
 export function TopScorerTable({ topScorers }: { topScorers: TopScorerRow[] }) {
   if (topScorers.length === 0) {
-    return <EmptyState icon={Target} title="No goals recorded yet" description="Top scorers appear once match results include goals." />;
+    return (
+      <EmptyState
+        icon={Target}
+        title="No goals recorded yet"
+        description="Top scorers appear once match results include goals."
+      />
+    );
   }
 
   return (

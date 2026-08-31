@@ -48,7 +48,13 @@ export default function NewTeamPage() {
             </div>
             <div>
               <Label htmlFor="shortName">Short name (optional)</Label>
-              <Input id="shortName" maxLength={10} value={shortName} onChange={(e) => setShortName(e.target.value)} placeholder="e.g. ARS" />
+              <Input
+                id="shortName"
+                maxLength={10}
+                value={shortName}
+                onChange={(e) => setShortName(e.target.value)}
+                placeholder="e.g. ARS"
+              />
             </div>
             <FieldError message={error ?? undefined} />
             <div className="flex justify-end gap-2">

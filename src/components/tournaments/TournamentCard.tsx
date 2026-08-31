@@ -17,7 +17,10 @@ const statusStyle: Record<TournamentCardData["status"], string> = {
 
 export function TournamentCard({ tournament }: { tournament: TournamentCardData }) {
   return (
-    <Link href={`/tournaments/${tournament.id}`} className="card flex flex-col gap-3 p-5 transition-shadow hover:shadow-md">
+    <Link
+      href={`/tournaments/${tournament.id}`}
+      className="card flex flex-col gap-3 p-5 transition-shadow hover:shadow-md"
+    >
       <div className="flex items-start justify-between gap-2">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-light text-brand">
           <Trophy size={18} />

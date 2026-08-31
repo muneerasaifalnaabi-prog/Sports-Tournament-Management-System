@@ -27,9 +27,7 @@ export async function POST(req: NextRequest) {
         name: body.name,
         shortName: body.shortName || null,
         logoUrl: body.logoUrl || null,
-        ...(session.role === "TEAM_MANAGER"
-          ? { managers: { connect: { id: session.sub } } }
-          : {}),
+        ...(session.role === "TEAM_MANAGER" ? { managers: { connect: { id: session.sub } } } : {}),
       },
     });
 

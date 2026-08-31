@@ -46,7 +46,8 @@ export default function TeamDetailPage({ params }: { params: Promise<{ id: strin
   if (!team) return <PageSpinner />;
 
   const canManage =
-    hasRole(user, ["ADMIN", "ORGANIZER"]) || (!!user && team.managers.some((m) => m.id === user.id));
+    hasRole(user, ["ADMIN", "ORGANIZER"]) ||
+    (!!user && team.managers.some((m) => m.id === user.id));
 
   const handleRemovePlayer = async (playerId: string) => {
     if (!confirm("Remove this player from the roster?")) return;
@@ -85,7 +86,11 @@ export default function TeamDetailPage({ params }: { params: Promise<{ id: strin
           )}
         </CardHeader>
         {team.players.length === 0 ? (
-          <EmptyState icon={UserRound} title="No players yet" description={canManage ? "Add players to build the roster." : undefined} />
+          <EmptyState
+            icon={UserRound}
+            title="No players yet"
+            description={canManage ? "Add players to build the roster." : undefined}
+          />
         ) : (
           <Table>
             <Thead>
@@ -101,14 +106,21 @@ export default function TeamDetailPage({ params }: { params: Promise<{ id: strin
                 <Tr key={p.id}>
                   <Td>{p.jerseyNo ?? "–"}</Td>
                   <Td>
-                    <Link href={`/players/${p.id}`} className="font-medium text-foreground hover:text-brand">
+                    <Link
+                      href={`/players/${p.id}`}
+                      className="font-medium text-foreground hover:text-brand"
+                    >
                       {p.name}
                     </Link>
                   </Td>
                   <Td className="text-muted">{p.position ?? "–"}</Td>
                   {canManage && (
                     <Td>
-                      <button onClick={() => handleRemovePlayer(p.id)} className="text-muted hover:text-red-600" aria-label="Remove player">
+                      <button
+                        onClick={() => handleRemovePlayer(p.id)}
+                        className="text-muted hover:text-red-400"
+                        aria-label="Remove player"
+                      >
                         <Trash2 size={15} />
                       </button>
                     </Td>
@@ -130,7 +142,10 @@ export default function TeamDetailPage({ params }: { params: Promise<{ id: strin
           <ul className="divide-y divide-border">
             {team.tournaments.map(({ tournament }) => (
               <li key={tournament.id} className="px-5 py-3 text-sm">
-                <Link href={`/tournaments/${tournament.id}`} className="font-medium text-foreground hover:text-brand">
+                <Link
+                  href={`/tournaments/${tournament.id}`}
+                  className="font-medium text-foreground hover:text-brand"
+                >
                   {tournament.name}
                 </Link>
                 <span className="ml-2 text-xs text-muted">{tournament.status}</span>
@@ -140,7 +155,12 @@ export default function TeamDetailPage({ params }: { params: Promise<{ id: strin
         )}
       </Card>
 
-      <AddPlayerModal open={modalOpen} onClose={() => setModalOpen(false)} teamId={id} onAdded={load} />
+      <AddPlayerModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        teamId={id}
+        onAdded={load}
+      />
     </div>
   );
 }
@@ -201,11 +221,22 @@ function AddPlayerModal({
         <div className="grid grid-cols-2 gap-3">
           <div>
             <Label htmlFor="jerseyNo">Jersey no.</Label>
-            <Input id="jerseyNo" type="number" min={0} value={jerseyNo} onChange={(e) => setJerseyNo(e.target.value)} />
+            <Input
+              id="jerseyNo"
+              type="number"
+              min={0}
+              value={jerseyNo}
+              onChange={(e) => setJerseyNo(e.target.value)}
+            />
           </div>
           <div>
             <Label htmlFor="position">Position</Label>
-            <Input id="position" value={position} onChange={(e) => setPosition(e.target.value)} placeholder="e.g. Forward" />
+            <Input
+              id="position"
+              value={position}
+              onChange={(e) => setPosition(e.target.value)}
+              placeholder="e.g. Forward"
+            />
           </div>
         </div>
         <FieldError message={error ?? undefined} />

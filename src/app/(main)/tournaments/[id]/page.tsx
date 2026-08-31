@@ -24,7 +24,11 @@ interface TournamentDetail {
   format: "LEAGUE" | "KNOCKOUT";
   status: "DRAFT" | "ONGOING" | "COMPLETED";
   organizer: { id: string; name: string };
-  teams: { id: string; seed: number | null; team: { id: string; name: string; shortName: string | null } }[];
+  teams: {
+    id: string;
+    seed: number | null;
+    team: { id: string; name: string; shortName: string | null };
+  }[];
 }
 
 export default function TournamentDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -101,10 +105,11 @@ export default function TournamentDetailPage({ params }: { params: Promise<{ id:
             <Trophy size={20} />
           </div>
           <div>
-            <h1 className="text-xl font-semibold text-foreground">{tournament.name}</h1>
-            <p className="text-sm text-muted">
-              {tournament.format === "LEAGUE" ? "League" : "Knockout"} · Organized by {tournament.organizer.name}
-            </p>
+            <span className="eyebrow">
+              {tournament.format === "LEAGUE" ? "League" : "Knockout"}
+            </span>
+            <h1 className="mt-1 text-2xl font-bold text-foreground">{tournament.name}</h1>
+            <p className="text-sm text-muted">Organized by {tournament.organizer.name}</p>
           </div>
         </div>
         {isOwner && (
@@ -114,7 +119,10 @@ export default function TournamentDetailPage({ params }: { params: Promise<{ id:
               Edit
             </Button>
             {(rounds ?? []).length === 0 && (
-              <Button onClick={handleGenerateFixtures} disabled={generating || tournament.teams.length < 2}>
+              <Button
+                onClick={handleGenerateFixtures}
+                disabled={generating || tournament.teams.length < 2}
+              >
                 <Play size={15} />
                 {generating ? "Generating…" : "Generate fixtures"}
               </Button>
@@ -123,31 +131,54 @@ export default function TournamentDetailPage({ params }: { params: Promise<{ id:
         )}
       </div>
 
-      {actionError && <p className="text-sm text-red-600">{actionError}</p>}
+      {actionError && <p className="text-sm text-red-400">{actionError}</p>}
 
       <Tabs
         items={[
           {
             key: "fixtures",
             label: "Fixtures",
-            content: rounds === null ? <Card><TableSkeleton /></Card> : <MatchList rounds={rounds} />,
+            content:
+              rounds === null ? (
+                <Card>
+                  <TableSkeleton />
+                </Card>
+              ) : (
+                <MatchList rounds={rounds} />
+              ),
           },
           {
             key: "table",
             label: tournament.format === "LEAGUE" ? "Table" : "Bracket",
             content:
               tournament.format === "LEAGUE" ? (
-                <Card>{standings === null ? <TableSkeleton /> : <LeagueTable standings={standings} />}</Card>
+                <Card>
+                  {standings === null ? <TableSkeleton /> : <LeagueTable standings={standings} />}
+                </Card>
               ) : bracket === null ? (
-                <Card><TableSkeleton /></Card>
+                <Card>
+                  <TableSkeleton />
+                </Card>
               ) : (
-                <Card><CardBody><KnockoutBracket rounds={bracket} /></CardBody></Card>
+                <Card>
+                  <CardBody>
+                    <KnockoutBracket rounds={bracket} />
+                  </CardBody>
+                </Card>
               ),
           },
           {
             key: "topscorers",
             label: "Top Scorers",
-            content: <Card>{topScorers === null ? <TableSkeleton /> : <TopScorerTable topScorers={topScorers} />}</Card>,
+            content: (
+              <Card>
+                {topScorers === null ? (
+                  <TableSkeleton />
+                ) : (
+                  <TopScorerTable topScorers={topScorers} />
+                )}
+              </Card>
+            ),
           },
           {
             key: "teams",
@@ -223,7 +254,11 @@ function TeamsPanel({
     <Card>
       {canManage && (
         <div className="flex flex-col gap-2 border-b border-border p-4 sm:flex-row">
-          <Select value={selectedTeamId} onChange={(e) => setSelectedTeamId(e.target.value)} className="sm:max-w-xs">
+          <Select
+            value={selectedTeamId}
+            onChange={(e) => setSelectedTeamId(e.target.value)}
+            className="sm:max-w-xs"
+          >
             <option value="">Select a team to register…</option>
             {availableTeams.map((t) => (
               <option key={t.id} value={t.id}>
@@ -237,18 +272,29 @@ function TeamsPanel({
           </Button>
         </div>
       )}
-      {error && <p className="px-4 pt-3 text-sm text-red-600">{error}</p>}
+      {error && <p className="px-4 pt-3 text-sm text-red-400">{error}</p>}
       {teams.length === 0 ? (
-        <EmptyState icon={Shield} title="No teams registered" description="Register teams before generating fixtures." />
+        <EmptyState
+          icon={Shield}
+          title="No teams registered"
+          description="Register teams before generating fixtures."
+        />
       ) : (
         <ul className="divide-y divide-border">
           {teams.map((entry) => (
             <li key={entry.id} className="flex items-center justify-between px-4 py-3 text-sm">
-              <Link href={`/teams/${entry.team.id}`} className="font-medium text-foreground hover:text-brand">
+              <Link
+                href={`/teams/${entry.team.id}`}
+                className="font-medium text-foreground hover:text-brand"
+              >
                 {entry.team.name}
               </Link>
               {canManage && (
-                <button onClick={() => handleWithdraw(entry.team.id)} className="text-muted hover:text-red-600" aria-label="Withdraw team">
+                <button
+                  onClick={() => handleWithdraw(entry.team.id)}
+                  className="text-muted hover:text-red-400"
+                  aria-label="Withdraw team"
+                >
                   <Trash2 size={15} />
                 </button>
               )}

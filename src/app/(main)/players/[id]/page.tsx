@@ -51,7 +51,12 @@ export default function PlayerDetailPage({ params }: { params: Promise<{ id: str
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <StatCard label="Goals scored" value={scored.length} icon={Target} accent="green" />
-        <StatCard label="Matches with a goal" value={new Set(scored.map((g) => g.match.id)).size} icon={Target} accent="brand" />
+        <StatCard
+          label="Matches with a goal"
+          value={new Set(scored.map((g) => g.match.id)).size}
+          icon={Target}
+          accent="brand"
+        />
       </div>
 
       <Card>
@@ -64,7 +69,10 @@ export default function PlayerDetailPage({ params }: { params: Promise<{ id: str
           <ul className="divide-y divide-border">
             {player.goals.map((g) => (
               <li key={g.id} className="flex items-center justify-between px-5 py-3 text-sm">
-                <Link href={`/matches/${g.match.id}`} className="font-medium text-foreground hover:text-brand">
+                <Link
+                  href={`/matches/${g.match.id}`}
+                  className="font-medium text-foreground hover:text-brand"
+                >
                   View match
                 </Link>
                 {g.ownGoal && <span className="text-xs text-muted">Own goal</span>}

@@ -12,7 +12,9 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
       where: { id },
       include: {
         team: { select: { id: true, name: true, shortName: true } },
-        goals: { include: { match: { select: { id: true, tournamentId: true, createdAt: true } } } },
+        goals: {
+          include: { match: { select: { id: true, tournamentId: true, createdAt: true } } },
+        },
       },
     });
     if (!player) throw new NotFoundError("Player not found");

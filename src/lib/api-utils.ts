@@ -25,9 +25,7 @@ export function errorResponse(error: unknown): NextResponse {
 export class NotFoundError extends Error {}
 export class ConflictError extends Error {}
 
-export async function withApiHandler(
-  fn: () => Promise<NextResponse>,
-): Promise<NextResponse> {
+export async function withApiHandler(fn: () => Promise<NextResponse>): Promise<NextResponse> {
   try {
     return await fn();
   } catch (error) {

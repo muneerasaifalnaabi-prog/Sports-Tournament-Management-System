@@ -12,7 +12,7 @@ async function main() {
 
   const passwordHash = await bcrypt.hash(PASSWORD, 10);
 
-  const admin = await prisma.user.create({
+  await prisma.user.create({
     data: { name: "Ava Admin", email: "admin@stms.dev", passwordHash, role: "ADMIN" },
   });
   const organizer = await prisma.user.create({
@@ -55,13 +55,17 @@ async function main() {
     });
     teams.push(team);
 
-    const playerNames = Array.from({ length: 11 }, (_, n) => `${name.split(" ")[0]} Player ${n + 1}`);
+    const playerNames = Array.from(
+      { length: 11 },
+      (_, n) => `${name.split(" ")[0]} Player ${n + 1}`,
+    );
     for (const [idx, playerName] of playerNames.entries()) {
       await prisma.player.create({
         data: {
           name: playerName,
           jerseyNo: idx + 1,
-          position: idx === 0 ? "Goalkeeper" : idx < 5 ? "Defender" : idx < 9 ? "Midfielder" : "Forward",
+          position:
+            idx === 0 ? "Goalkeeper" : idx < 5 ? "Defender" : idx < 9 ? "Midfielder" : "Forward",
           teamId: team.id,
         },
       });
@@ -94,7 +98,9 @@ async function main() {
     where: { tournamentId: leagueTournament.id },
     orderBy: { id: "asc" },
   });
-  const allPlayers = await prisma.player.findMany({ where: { teamId: { in: leagueTeams.map((t) => t.id) } } });
+  const allPlayers = await prisma.player.findMany({
+    where: { teamId: { in: leagueTeams.map((t) => t.id) } },
+  });
   const playersByTeam = new Map<string, typeof allPlayers>();
   for (const p of allPlayers) {
     playersByTeam.set(p.teamId, [...(playersByTeam.get(p.teamId) ?? []), p]);
@@ -147,7 +153,10 @@ async function main() {
   const bracket = buildKnockoutBracket(knockoutTeams.map((t) => t.id));
   await prisma.$transaction(async (tx) => {
     await persistKnockoutBracket(tx, knockoutTournament.id, bracket);
-    await tx.tournament.update({ where: { id: knockoutTournament.id }, data: { status: "ONGOING" } });
+    await tx.tournament.update({
+      where: { id: knockoutTournament.id },
+      data: { status: "ONGOING" },
+    });
   });
 
   console.log("Seed complete.");

@@ -15,3 +15,12 @@ description: Visual design system for STMS — use when styling any page/compone
 - Status and brand colors meet WCAG AA contrast against their background.
 - Single icon set (`lucide-react`) throughout — no mixing icon libraries.
 - Sidebar/nav collapses to an off-canvas drawer below `md`; never let the top nav overflow horizontally.
+
+## Marketing / landing pages
+
+Inspiration benchmark: FotMob (clean layout, momentum/motion used purposefully, not decoratively), Sofascore (live-data energy — pulsing live indicators, ticking numbers), ESPN (bold hero, unmistakably "sports" at a glance). Applied here:
+
+- The hero must read as a sports platform within one second — use a stadium/floodlight motif (radial glow, light-ray sweeps), a live scoreboard-style animated element, and at least one pulsing "LIVE" indicator. Prefer pure CSS/SVG animation (keyframes, no external video/image assets) so it stays fast and self-contained.
+- Motion is purposeful, not gratuitous: a subtle glow pulse, a count-up on stats when they enter view, a slow light-ray sweep. Nothing should loop faster than ~2s or distract from reading the headline.
+- Respect `prefers-reduced-motion: reduce` — pause/simplify decorative animations for users who request it.
+- Landing/marketing sections (hero, features, stats, CTA) live under `components/marketing/*`, separate from the authenticated-app `components/ui` and `components/tournaments` kits.
