@@ -31,7 +31,7 @@ export function StatCard({ label, value, icon: Icon, accent = "brand" }: StatCar
         <Icon size={20} />
       </div>
       <div>
-        <p className="text-3xl font-bold tracking-tight text-foreground">{value}</p>
+        <p className="stat-figure text-3xl tracking-tight text-foreground">{value}</p>
         <p className="text-sm text-muted">{label}</p>
       </div>
     </div>

@@ -47,7 +47,7 @@ export function MatchCard({ match }: { match: MatchCardData }) {
       </div>
       <div className="flex items-center justify-between gap-2 text-sm font-medium text-foreground">
         <TeamLabel team={match.homeTeam} />
-        <span className="shrink-0 rounded bg-surface-alt px-2 py-0.5 text-sm font-bold tracking-tight text-foreground">
+        <span className="stat-figure shrink-0 rounded bg-surface-alt px-2 py-0.5 text-sm tracking-tight text-foreground">
           {hasScore ? `${match.homeScore} - ${match.awayScore}` : "vs"}
         </span>
         <TeamLabel team={match.awayTeam} />

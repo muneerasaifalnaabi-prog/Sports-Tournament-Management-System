@@ -12,12 +12,15 @@ export function Thead(props: HTMLAttributes<HTMLTableSectionElement>) {
   return <thead className="sticky top-0 bg-surface" {...props} />;
 }
 
-export function Th({ className = "", ...props }: ThHTMLAttributes<HTMLTableCellElement>) {
+export function Th({
+  className = "",
+  children,
+  ...props
+}: ThHTMLAttributes<HTMLTableCellElement>) {
   return (
-    <th
-      className={`border-b border-border px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-muted ${className}`.trim()}
-      {...props}
-    />
+    <th className={`border-b border-border px-4 py-2.5 text-left ${className}`.trim()} {...props}>
+      <span className="eyebrow-muted">{children}</span>
+    </th>
   );
 }
 

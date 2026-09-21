@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Flag } from "lucide-react";
 import { Card } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { Table, Thead, Th, Tr, Td } from "@/components/ui/Table";
 import { Select } from "@/components/ui/Input";
 import { MatchStatusBadge } from "@/components/ui/Badge";
@@ -52,12 +53,11 @@ export default function RefereeBoardPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-xl font-semibold text-foreground">Referee board</h1>
-        <p className="text-sm text-muted">
-          Assign referees to upcoming matches across all tournaments.
-        </p>
-      </div>
+      <PageHeader
+        eyebrow="Admin"
+        title="Referee board"
+        subtitle="Assign referees to upcoming matches across all tournaments."
+      />
 
       <Card>
         {matches === null ? (

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Users as UsersIcon } from "lucide-react";
 import { Card } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { Table, Thead, Th, Tr, Td } from "@/components/ui/Table";
 import { Select } from "@/components/ui/Input";
 import { RoleBadge } from "@/components/ui/Badge";
@@ -41,10 +42,7 @@ export default function AdminUsersPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-xl font-semibold text-foreground">Users</h1>
-        <p className="text-sm text-muted">Manage roles across the platform.</p>
-      </div>
+      <PageHeader eyebrow="Admin" title="Users" subtitle="Manage roles across the platform." />
 
       <Card>
         {users === null ? (

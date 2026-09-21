@@ -21,8 +21,9 @@
   --status-cancelled: #7b869e;
   --status-cancelled-bg: rgb(123 134 158 / 0.14);
 
-  /* Single typeface (Rubik) app-wide — heading is an alias, not a second family */
-  --font-heading: var(--font-sans);
+  /* --font-heading (Source Serif 4) comes from the font's `variable` class on <html>,
+     see src/lib/fonts.ts. Serif = editorial content (headings, big numerals);
+     sans (Rubik) stays the UI-chrome typeface everywhere else. */
 }
 
 @theme inline {
@@ -59,8 +60,8 @@ body {
 h1,
 h2,
 h3 {
-  font-family: var(--font-heading), var(--font-sans), system-ui, sans-serif;
-  letter-spacing: -0.02em;
+  font-family: var(--font-heading), Georgia, "Times New Roman", serif;
+  letter-spacing: -0.01em;
 }
 
 /* "STMS" wordmark — logo lockups only, see src/lib/fonts.ts */
@@ -180,12 +181,14 @@ h3 {
     margin-bottom: 0.25rem;
   }
 
-  /* Small-caps tracked eyebrow label — the editorial "section tag" motif */
+  /* Small-caps tracked eyebrow label — the editorial "section tag" motif.
+     Deliberately sans, not --font-heading: tracked caps stay legible where a
+     serif display face would not. */
   .eyebrow {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-family: var(--font-heading), var(--font-sans), system-ui, sans-serif;
+    font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.16em;
@@ -193,11 +196,33 @@ h3 {
     color: var(--brand);
   }
 
+  /* Same tracked-caps recipe as .eyebrow, neutral color — for functional labels
+     (table headers, bracket round names, nav section headers) rather than
+     brand statements. */
+  .eyebrow-muted {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
   /* Thin gold rule — the recurring divider motif */
   .rule-gold {
     height: 1px;
     width: 100%;
     background: linear-gradient(90deg, var(--brand) 0%, rgb(232 163 61 / 0) 60%);
+  }
+
+  /* Editorial numeral treatment for emphasized figures (stats, points, scores) */
+  .stat-figure {
+    font-family: var(--font-heading), Georgia, serif;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
   }
 
   .badge {

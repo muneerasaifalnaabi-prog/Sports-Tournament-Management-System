@@ -9,7 +9,7 @@ export function MarketingNav() {
   const { user, loading } = useSession();
 
   return (
-    <header className="sticky top-0 z-20 border-b border-white/10 bg-[#0b0e1f]/80 backdrop-blur-sm">
+    <header className="sticky top-0 z-20 border-b border-white/10 bg-background/80 backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2 text-lg font-bold text-white">
           <Trophy size={22} className="text-amber-300" />

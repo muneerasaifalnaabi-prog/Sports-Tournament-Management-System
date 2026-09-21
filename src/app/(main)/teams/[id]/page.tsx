@@ -4,6 +4,7 @@ import { use, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { Pencil, Plus, Shield, Trash2, Trophy, UserRound } from "lucide-react";
 import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Input, Label, FieldError } from "@/components/ui/Input";
 import { Table, Thead, Th, Tr, Td } from "@/components/ui/Table";
@@ -57,23 +58,20 @@ export default function TeamDetailPage({ params }: { params: Promise<{ id: strin
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div className="flex items-start gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-brand-light text-brand">
-            <Shield size={20} />
-          </div>
-          <div>
-            <h1 className="text-xl font-semibold text-foreground">{team.name}</h1>
-            <p className="text-sm text-muted">{team.players.length} players on roster</p>
-          </div>
-        </div>
-        {canManage && (
-          <Button href={`/teams/${id}/edit`} variant="secondary">
-            <Pencil size={15} />
-            Edit team
-          </Button>
-        )}
-      </div>
+      <PageHeader
+        icon={Shield}
+        eyebrow="Team"
+        title={team.name}
+        subtitle={`${team.players.length} players on roster`}
+        actions={
+          canManage ? (
+            <Button href={`/teams/${id}/edit`} variant="secondary">
+              <Pencil size={15} />
+              Edit team
+            </Button>
+          ) : undefined
+        }
+      />
 
       <Card>
         <CardHeader>

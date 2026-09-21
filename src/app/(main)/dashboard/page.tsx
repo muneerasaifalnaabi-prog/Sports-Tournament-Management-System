@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CalendarClock, Flag, Shield, Trophy } from "lucide-react";
 import { StatCard } from "@/components/ui/StatCard";
 import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { MatchStatusBadge } from "@/components/ui/Badge";
 import { PageSpinner } from "@/components/ui/Spinner";
@@ -52,15 +53,11 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <span className="eyebrow">Dashboard</span>
-        <h1 className="mt-2 text-2xl font-bold text-foreground">
-          Welcome back, {user.name.split(" ")[0]}
-        </h1>
-        <p className="text-sm text-muted">
-          Here&apos;s what&apos;s happening across your tournaments.
-        </p>
-      </div>
+      <PageHeader
+        eyebrow="Dashboard"
+        title={`Welcome back, ${user.name.split(" ")[0]}`}
+        subtitle="Here's what's happening across your tournaments."
+      />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label="Ongoing tournaments" value={ongoing} icon={Trophy} accent="brand" />

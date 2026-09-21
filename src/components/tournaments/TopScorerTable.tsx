@@ -30,7 +30,7 @@ export function TopScorerTable({ topScorers }: { topScorers: TopScorerRow[] }) {
             <Td>{idx + 1}</Td>
             <Td className="font-medium">{row.playerName}</Td>
             <Td className="text-muted">{row.teamName}</Td>
-            <Td className="text-center font-semibold text-brand">{row.goals}</Td>
+            <Td className="stat-figure text-center text-brand">{row.goals}</Td>
           </Tr>
         ))}
       </tbody>

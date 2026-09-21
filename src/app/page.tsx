@@ -72,6 +72,7 @@ export default function HomePage() {
         </div>
         <div className="hero-photo-overlay" />
         <div className="hero-ray pointer-events-none absolute inset-0 z-[2]" />
+        <div className="hero-floodlight pointer-events-none absolute -left-24 top-1/3 z-[1] h-96 w-96" />
 
         <div className="relative z-10 mx-auto flex min-h-[34rem] max-w-6xl items-center px-4 py-16 sm:min-h-[40rem] sm:px-6 sm:py-24 lg:min-h-[46rem] lg:py-28">
           <div className="max-w-xl text-white">
@@ -79,7 +80,7 @@ export default function HomePage() {
               <span className="live-dot" />
               Built for real tournaments
             </span>
-            <h1 className="text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
               Run your league or cup like a pro sports platform.
             </h1>
             <p className="mt-5 max-w-lg text-base text-white/75 sm:text-lg">
@@ -128,7 +129,9 @@ export default function HomePage() {
 
       <section id="features" className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
         <RevealOnScroll className="mx-auto max-w-2xl text-center">
-          <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">
+          <span className="eyebrow justify-center">What you get</span>
+          <div className="rule-gold mx-auto mt-3 max-w-16" />
+          <h2 className="mt-3 text-2xl font-semibold text-foreground sm:text-3xl">
             Everything a tournament organizer needs
           </h2>
           <p className="mt-3 text-sm text-muted sm:text-base">
@@ -156,6 +159,7 @@ export default function HomePage() {
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
         <RevealOnScroll className="mx-auto max-w-2xl text-center">
           <span className="eyebrow justify-center">Inside STMS</span>
+          <div className="rule-gold mx-auto mt-3 max-w-16" />
           <h2 className="mt-3 text-2xl font-semibold text-foreground sm:text-3xl">
             A command center for every tournament
           </h2>
@@ -169,6 +173,7 @@ export default function HomePage() {
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
             <RevealOnScroll>
               <span className="eyebrow">Live control room</span>
+              <div className="rule-gold mt-3 max-w-12" />
               <h3 className="mt-3 text-xl font-semibold text-foreground sm:text-2xl">
                 Watch every match, bracket, and top scorer update in real time
               </h3>
@@ -200,6 +205,7 @@ export default function HomePage() {
             </RevealOnScroll>
             <RevealOnScroll className="lg:order-2">
               <span className="eyebrow">One screen, every stat</span>
+              <div className="rule-gold mt-3 max-w-12" />
               <h3 className="mt-3 text-xl font-semibold text-foreground sm:text-2xl">
                 Standings, brackets, and player stats side by side
               </h3>

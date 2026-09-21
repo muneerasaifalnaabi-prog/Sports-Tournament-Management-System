@@ -116,7 +116,7 @@ export default function MatchDetailPage({ params }: { params: Promise<{ id: stri
                 {match.homeTeam?.name ?? "TBD"}
               </p>
             </div>
-            <div className="rounded-lg bg-surface-alt px-5 py-2 text-4xl font-bold tracking-tight text-foreground">
+            <div className="stat-figure rounded-lg bg-surface-alt px-5 py-2 text-4xl tracking-tight text-foreground">
               {match.homeScore ?? "–"} : {match.awayScore ?? "–"}
             </div>
             <div className="flex-1">

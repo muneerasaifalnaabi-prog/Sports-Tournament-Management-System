@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import { Source_Serif_4 } from "next/font/google";
 
 /**
  * App-wide typeface. Every static weight is registered so Tailwind's
@@ -19,6 +20,18 @@ export const rubik = localFont({
     { path: "../../fonts/rubik/Rubik-BlackItalic.ttf", weight: "900", style: "italic" },
   ],
   variable: "--font-sans",
+  display: "swap",
+});
+
+/**
+ * Editorial display face — headlines, section titles, big numerals.
+ * Paired with Rubik (UI chrome/body) for the magazine-style two-family system.
+ */
+export const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "900"],
+  style: ["normal", "italic"],
+  variable: "--font-heading",
   display: "swap",
 });
 

@@ -45,7 +45,7 @@ export function KnockoutBracket({ rounds }: { rounds: BracketRound[] }) {
             className="flex w-56 shrink-0 flex-col justify-around"
             style={{ minHeight: containerHeight }}
           >
-            <p className="mb-3 text-center text-xs font-semibold uppercase tracking-wide text-muted">
+            <p className="eyebrow-muted mb-3 justify-center text-center">
               {round.name}
             </p>
             <div className="flex h-full flex-col justify-around">

@@ -40,9 +40,7 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
       ))}
       {isAdmin && (
         <>
-          <p className="mt-4 mb-1 px-3 text-xs font-semibold uppercase tracking-wide text-muted">
-            Admin
-          </p>
+          <p className="eyebrow-muted mt-4 mb-1 px-3">Admin</p>
           {adminItems.map((item) => (
             <SidebarLink
               key={item.href}

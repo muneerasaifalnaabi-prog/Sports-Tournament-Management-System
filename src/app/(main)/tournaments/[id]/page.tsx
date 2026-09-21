@@ -5,6 +5,7 @@ import { use } from "react";
 import Link from "next/link";
 import { Pencil, Play, Shield, Trash2, Trophy, Users } from "lucide-react";
 import { Card, CardBody } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Input";
 import { Tabs } from "@/components/ui/Tabs";
@@ -99,37 +100,31 @@ export default function TournamentDetailPage({ params }: { params: Promise<{ id:
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div className="flex items-start gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-brand-light text-brand">
-            <Trophy size={20} />
-          </div>
-          <div>
-            <span className="eyebrow">
-              {tournament.format === "LEAGUE" ? "League" : "Knockout"}
-            </span>
-            <h1 className="mt-1 text-2xl font-bold text-foreground">{tournament.name}</h1>
-            <p className="text-sm text-muted">Organized by {tournament.organizer.name}</p>
-          </div>
-        </div>
-        {isOwner && (
-          <div className="flex items-center gap-2">
-            <Button href={`/tournaments/${id}/edit`} variant="secondary">
-              <Pencil size={15} />
-              Edit
-            </Button>
-            {(rounds ?? []).length === 0 && (
-              <Button
-                onClick={handleGenerateFixtures}
-                disabled={generating || tournament.teams.length < 2}
-              >
-                <Play size={15} />
-                {generating ? "Generating…" : "Generate fixtures"}
+      <PageHeader
+        icon={Trophy}
+        eyebrow={tournament.format === "LEAGUE" ? "League" : "Knockout"}
+        title={tournament.name}
+        subtitle={`Organized by ${tournament.organizer.name}`}
+        actions={
+          isOwner ? (
+            <>
+              <Button href={`/tournaments/${id}/edit`} variant="secondary">
+                <Pencil size={15} />
+                Edit
               </Button>
-            )}
-          </div>
-        )}
-      </div>
+              {(rounds ?? []).length === 0 && (
+                <Button
+                  onClick={handleGenerateFixtures}
+                  disabled={generating || tournament.teams.length < 2}
+                >
+                  <Play size={15} />
+                  {generating ? "Generating…" : "Generate fixtures"}
+                </Button>
+              )}
+            </>
+          ) : undefined
+        }
+      />
 
       {actionError && <p className="text-sm text-red-400">{actionError}</p>}
 

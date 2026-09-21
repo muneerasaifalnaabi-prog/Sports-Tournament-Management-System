@@ -41,7 +41,7 @@ export function StatCounter({
 
   return (
     <div ref={ref} className="text-center">
-      <p className="text-3xl font-bold text-foreground sm:text-4xl">
+      <p className="stat-figure text-3xl text-foreground sm:text-4xl">
         {count}
         {suffix}
       </p>

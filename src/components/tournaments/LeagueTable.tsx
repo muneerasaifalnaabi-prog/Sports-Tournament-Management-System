@@ -52,7 +52,7 @@ export function LeagueTable({ standings }: { standings: StandingRow[] }) {
             <Td className="text-center">
               {row.goalDifference > 0 ? `+${row.goalDifference}` : row.goalDifference}
             </Td>
-            <Td className="text-center text-base font-bold text-brand">{row.points}</Td>
+            <Td className="stat-figure text-center text-base text-brand">{row.points}</Td>
           </Tr>
         ))}
       </tbody>

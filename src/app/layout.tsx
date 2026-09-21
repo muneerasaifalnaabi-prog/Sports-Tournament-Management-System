@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SessionProvider } from "@/lib/session-context";
-import { rubik, rushDriver } from "@/lib/fonts";
+import { rubik, rushDriver, sourceSerif } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "STMS — Sports Tournament Management System",
@@ -10,7 +10,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`h-full antialiased ${rubik.variable} ${rushDriver.variable}`}>
+    <html
+      lang="en"
+      className={`h-full antialiased ${rubik.variable} ${rushDriver.variable} ${sourceSerif.variable}`}
+    >
       <body className="min-h-full flex flex-col">
         <SessionProvider>{children}</SessionProvider>
       </body>
