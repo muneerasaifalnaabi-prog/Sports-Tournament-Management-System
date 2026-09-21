@@ -6,10 +6,12 @@ export function StatCounter({
   value,
   suffix = "",
   label,
+  big = false,
 }: {
   value: number;
   suffix?: string;
   label: string;
+  big?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [count, setCount] = useState(0);
@@ -41,11 +43,13 @@ export function StatCounter({
 
   return (
     <div ref={ref} className="text-center">
-      <p className="stat-figure text-3xl text-foreground sm:text-4xl">
+      <p
+        className={`stat-figure text-foreground ${big ? "text-4xl sm:text-5xl" : "text-3xl sm:text-4xl"}`}
+      >
         {count}
         {suffix}
       </p>
-      <p className="mt-1 text-sm text-muted">{label}</p>
+      <p className="mt-1 text-sm italic text-muted">{label}</p>
     </div>
   );
 }

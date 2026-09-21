@@ -225,6 +225,44 @@ h3 {
     font-variant-numeric: tabular-nums;
   }
 
+  /* Italic serif accent for a single word/phrase inside an otherwise-roman
+     headline — the magazine-headline emphasis device. */
+  .headline-accent {
+    font-style: italic;
+    color: var(--brand);
+  }
+
+  /* Oversized faint outlined numeral — a decorative background "index" mark
+     for feature/section cards (01, 02…), magazine-margin-note style. */
+  .index-number {
+    font-family: var(--font-heading), Georgia, serif;
+    font-weight: 900;
+    font-style: italic;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(232 163 61 / 0.35);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Large italic serif statement — the magazine pull-quote motif */
+  .pull-quote {
+    font-family: var(--font-heading), Georgia, serif;
+    font-style: italic;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--foreground);
+  }
+
+  /* Oversized serif quotation mark, positioned to sit above/behind a pull-quote */
+  .pull-quote-mark {
+    font-family: var(--font-heading), Georgia, serif;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--brand);
+    opacity: 0.4;
+  }
+
   .badge {
     display: inline-flex;
     align-items: center;

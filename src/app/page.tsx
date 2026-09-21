@@ -54,6 +54,17 @@ const features = [
   },
 ];
 
+// Uneven column spans on a 6-col grid — the "bento" rhythm that breaks up the
+// otherwise uniform feature grid into a magazine-style asymmetric layout.
+const bentoSpan = [
+  "sm:col-span-4",
+  "sm:col-span-2",
+  "sm:col-span-2",
+  "sm:col-span-2",
+  "sm:col-span-2",
+  "sm:col-span-4",
+];
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
@@ -81,7 +92,8 @@ export default function HomePage() {
               Built for real tournaments
             </span>
             <h1 className="text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-              Run your league or cup like a pro sports platform.
+              Run your league or cup <span className="headline-accent">like a pro</span>
+              &nbsp;sports platform.
             </h1>
             <p className="mt-5 max-w-lg text-base text-white/75 sm:text-lg">
               STMS handles fixtures, live standings, knockout brackets, top scorers, and referee
@@ -108,22 +120,25 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-b border-border bg-surface py-10">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 sm:grid-cols-4 sm:px-6">
-          {[
-            { value: 12, suffix: "", label: "Active tournaments" },
-            { value: 48, suffix: "", label: "Teams competing" },
-            { value: 620, suffix: "+", label: "Players tracked" },
-            { value: 310, suffix: "+", label: "Goals recorded" },
-          ].map((s, i) => (
-            <RevealOnScroll
-              key={s.label}
-              delayMs={i * 80}
-              className="rounded-xl p-2 transition-transform duration-300 hover:-translate-y-1"
-            >
-              <StatCounter value={s.value} suffix={s.suffix} label={s.label} />
-            </RevealOnScroll>
-          ))}
+      <section className="border-b border-border bg-surface py-12">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <span className="eyebrow justify-center text-center">By the numbers</span>
+          <div className="mt-6 grid grid-cols-2 divide-y divide-border sm:grid-cols-4 sm:divide-x sm:divide-y-0">
+            {[
+              { value: 12, suffix: "", label: "Active tournaments" },
+              { value: 48, suffix: "", label: "Teams competing" },
+              { value: 620, suffix: "+", label: "Players tracked" },
+              { value: 310, suffix: "+", label: "Goals recorded" },
+            ].map((s, i) => (
+              <RevealOnScroll
+                key={s.label}
+                delayMs={i * 80}
+                className="px-4 py-4 transition-transform duration-300 hover:-translate-y-1"
+              >
+                <StatCounter value={s.value} suffix={s.suffix} label={s.label} big />
+              </RevealOnScroll>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -139,18 +154,26 @@ export default function HomePage() {
             organizers, referees, and team managers alike.
           </p>
         </RevealOnScroll>
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-6">
           {features.map((f, i) => (
             <RevealOnScroll
               key={f.title}
               delayMs={(i % 3) * 90}
-              className="card card-interactive group p-5"
+              className={`card card-interactive group relative overflow-hidden p-6 ${
+                bentoSpan[i]
+              }`}
             >
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-brand-light text-brand transition-transform duration-300 group-hover:scale-110">
+              <span
+                className="index-number pointer-events-none absolute -right-1 -top-3 select-none text-7xl sm:text-8xl"
+                aria-hidden
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div className="relative mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-brand-light text-brand transition-transform duration-300 group-hover:scale-110">
                 <f.icon size={19} />
               </div>
-              <h3 className="font-semibold text-foreground">{f.title}</h3>
-              <p className="mt-1.5 text-sm text-muted">{f.description}</p>
+              <h3 className="relative font-semibold text-foreground">{f.title}</h3>
+              <p className="relative mt-1.5 text-sm text-muted">{f.description}</p>
             </RevealOnScroll>
           ))}
         </div>
@@ -193,6 +216,13 @@ export default function HomePage() {
             </RevealOnScroll>
           </div>
 
+          <RevealOnScroll className="mx-auto max-w-2xl text-center">
+            <span className="pull-quote-mark block text-6xl sm:text-7xl">&ldquo;</span>
+            <p className="pull-quote -mt-4 text-2xl sm:text-3xl">
+              Every stat, every match, exactly where your organizers need it.
+            </p>
+          </RevealOnScroll>
+
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
             <RevealOnScroll className="showcase-media lg:order-1" slideUp={false}>
               <Image
@@ -232,7 +262,9 @@ export default function HomePage() {
 
         <RevealOnScroll className="relative z-10 mx-auto max-w-3xl px-4 py-16 text-center text-white sm:px-6 sm:py-20">
           <Trophy size={32} className="mx-auto mb-4 text-amber-300" />
-          <h2 className="text-2xl font-bold sm:text-3xl">Ready to kick off?</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">
+            Ready to <span className="headline-accent">kick off</span>?
+          </h2>
           <p className="mx-auto mt-3 max-w-lg text-white/70">
             Create your first tournament in minutes — register teams, generate fixtures, and go
             live.

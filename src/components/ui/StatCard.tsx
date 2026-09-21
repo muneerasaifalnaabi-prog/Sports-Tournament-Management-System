@@ -32,7 +32,7 @@ export function StatCard({ label, value, icon: Icon, accent = "brand" }: StatCar
       </div>
       <div>
         <p className="stat-figure text-3xl tracking-tight text-foreground">{value}</p>
-        <p className="text-sm text-muted">{label}</p>
+        <p className="text-sm italic text-muted">{label}</p>
       </div>
     </div>
   );
